@@ -9,10 +9,10 @@ import 'package:meals_app/providers/filters_provider.dart';
 
 // Global variables start with k
 const kInitialFilters = {
-  Filter.glutenFree: false,
-  Filter.lactoseFree: false,
-  Filter.vegetarian: false,
-  Filter.vegan: false,
+  AllergenFilter.glutenFree: false,
+  AllergenFilter.lactoseFree: false,
+  AllergenFilter.vegetarian: false,
+  AllergenFilter.vegan: false,
 };
 
 class TabsScreen extends ConsumerStatefulWidget {
@@ -40,7 +40,7 @@ class _TabsScreenState extends ConsumerState<TabsScreen> {
     Navigator.of(context).pop();
     switch (identifier) {
       case 'filters':
-        await Navigator.of(context).push<Map<Filter, bool>>(
+        await Navigator.of(context).push<Map<AllergenFilter, bool>>(
           MaterialPageRoute(
             builder: (ctx) => const FiltersScreen(),
           ),

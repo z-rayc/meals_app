@@ -1,27 +1,29 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meals_app/providers/meals_provider.dart';
+import 'package:meals_app/models/meal.dart';
 
-enum Filter {
+enum AllergenFilter {
   glutenFree,
   lactoseFree,
   vegetarian,
   vegan,
 }
 
-class FiltersNotifier extends StateNotifier<Map<Filter, bool>> {
-  FiltersNotifier()
+class AllergenFiltersNotifier extends StateNotifier<Map<AllergenFilter, bool>> {
+  // If a filter is active, the meal must match the filter
+  AllergenFiltersNotifier()
       : super({
-          Filter.glutenFree: false,
-          Filter.lactoseFree: false,
-          Filter.vegetarian: false,
-          Filter.vegan: false,
+          AllergenFilter.glutenFree: false,
+          AllergenFilter.lactoseFree: false,
+          AllergenFilter.vegetarian: false,
+          AllergenFilter.vegan: false,
         });
 
-  void setFilters(Map<Filter, bool> chosenFilters) {
+  void setAllergenFilters(Map<AllergenFilter, bool> chosenFilters) {
     state = chosenFilters;
   }
 
-  void setFilter(Filter filter, bool isActive) {
+  void setAllergenFilter(AllergenFilter filter, bool isActive) {
     state = {
       ...state,
       filter: isActive,
@@ -29,27 +31,56 @@ class FiltersNotifier extends StateNotifier<Map<Filter, bool>> {
   }
 }
 
-final filtersProvider =
-    StateNotifierProvider<FiltersNotifier, Map<Filter, bool>>(
-        (ref) => FiltersNotifier());
+final allergenFiltersProvider =
+    StateNotifierProvider<AllergenFiltersNotifier, Map<AllergenFilter, bool>>(
+        (ref) => AllergenFiltersNotifier());
+
+class ComplexityFiltersNotifier extends StateNotifier<List<Complexity>> {
+  // If a complexity filter is active, the meal must match the filter
+  ComplexityFiltersNotifier() : super([]);
+
+  void setFilters(List<Complexity> chosenFilters) {
+    state = chosenFilters;
+  }
+}
+
+final complexityFiltersProvider =
+    StateNotifierProvider<ComplexityFiltersNotifier, List<Complexity>>(
+        (ref) => ComplexityFiltersNotifier());
 
 final filteredMealsProvider = Provider((ref) {
   final meals = ref.watch(mealsProvider);
-  final activeFilters = ref.watch(filtersProvider);
+  final activeAllergenFilters = ref.watch(allergenFiltersProvider);
+  final activeComplexityFilters = ref.watch(complexityFiltersProvider);
 
   return meals.where((meal) {
     // Do not include meal if the filter is set
     // and the meal does not match the filter
-    if (activeFilters[Filter.glutenFree]! && !meal.isGlutenFree) {
+    if (activeAllergenFilters[AllergenFilter.glutenFree]! &&
+        !meal.isGlutenFree) {
       return false;
     }
-    if (activeFilters[Filter.lactoseFree]! && !meal.isLactoseFree) {
+    if (activeAllergenFilters[AllergenFilter.lactoseFree]! &&
+        !meal.isLactoseFree) {
       return false;
     }
-    if (activeFilters[Filter.vegetarian]! && !meal.isVegetarian) {
+    if (activeAllergenFilters[AllergenFilter.vegetarian]! &&
+        !meal.isVegetarian) {
       return false;
     }
-    if (activeFilters[Filter.vegan]! && !meal.isVegan) {
+    if (activeAllergenFilters[AllergenFilter.vegan]! && !meal.isVegan) {
+      return false;
+    }
+    if (activeComplexityFilters.contains(Complexity.simple) &&
+        meal.complexity != Complexity.simple) {
+      return false;
+    }
+    if (activeComplexityFilters.contains(Complexity.challenging) &&
+        meal.complexity != Complexity.challenging) {
+      return false;
+    }
+    if (activeComplexityFilters.contains(Complexity.hard) &&
+        meal.complexity != Complexity.hard) {
       return false;
     }
     return true;
