@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meals_app/models/meal.dart';
 import 'package:meals_app/providers/filters_provider.dart';
 
+/// This screen is used to display the filters.
+/// The user can toggle allergen filters and complexity filters.
 class FiltersScreen extends ConsumerWidget {
   const FiltersScreen({
     super.key,

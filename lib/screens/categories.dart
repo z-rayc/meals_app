@@ -5,6 +5,8 @@ import 'package:meals_app/models/meal.dart';
 import 'package:meals_app/screens/meals.dart';
 import 'package:meals_app/widgets/category_grid_item.dart';
 
+/// This screen displays all the meal categories.
+/// The user can select a category to view the meals in that category.
 class CategoriesScreen extends StatefulWidget {
   const CategoriesScreen({
     super.key,

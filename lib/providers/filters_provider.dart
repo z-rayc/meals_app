@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meals_app/providers/meals_provider.dart';
 import 'package:meals_app/models/meal.dart';
 
+/// AllergenFilter represents the allergen filters that can be applied.
 enum AllergenFilter {
   glutenFree,
   lactoseFree,
@@ -9,6 +10,7 @@ enum AllergenFilter {
   vegan,
 }
 
+/// This provider is used to store the which allergen filters are active.
 class AllergenFiltersNotifier extends StateNotifier<Map<AllergenFilter, bool>> {
   // If a filter is active, the meal must match the filter
   AllergenFiltersNotifier()
@@ -35,6 +37,7 @@ final allergenFiltersProvider =
     StateNotifierProvider<AllergenFiltersNotifier, Map<AllergenFilter, bool>>(
         (ref) => AllergenFiltersNotifier());
 
+/// This provider is used to store the which complexity filters are active.
 class ComplexityFiltersNotifier extends StateNotifier<List<Complexity>> {
   // If a complexity filter is active, the meal must match the filter
   ComplexityFiltersNotifier() : super([]);

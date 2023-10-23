@@ -1,15 +1,20 @@
+/// Complexity represents the complexity of a meal,
+/// i.e. how difficult it is to make.
 enum Complexity {
   simple,
   challenging,
   hard,
 }
 
+/// Affordability represents the affordability of a meal,
+/// i.e. how expensive it is to make.
 enum Affordability {
   affordable,
   pricey,
   luxurious,
 }
 
+/// Meal model represents a single meal.
 class Meal {
   const Meal({
     required this.id,

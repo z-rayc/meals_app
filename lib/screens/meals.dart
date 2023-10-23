@@ -3,6 +3,9 @@ import 'package:meals_app/models/meal.dart';
 import 'package:meals_app/screens/meal_details.dart';
 import 'package:meals_app/widgets/meal_item.dart';
 
+/// This screen displays a group of meals,
+/// and allows the user to select a meal to view its details.
+/// Example of a group: Category or Favorites.
 class MealsScreen extends StatelessWidget {
   const MealsScreen({
     super.key,

@@ -15,6 +15,8 @@ const kInitialFilters = {
   AllergenFilter.vegan: false,
 };
 
+/// This screen is used to display the tabs.
+/// The user can switch between the categories screen and the favorites screen.
 class TabsScreen extends ConsumerStatefulWidget {
   const TabsScreen({
     super.key,
